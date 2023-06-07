@@ -39,4 +39,16 @@ class ReservasiModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    static public function view(){
+        $view = (new ReservasiModel())
+                    ->select("reservasi.*, user.nama as user, meja.meja ")
+                    ->join('user', 'reservasi.user_id = user.id', 'left')
+                    ->join('meja', 'reservasi.meja_id = meja.id', 'left')
+                    ->builder();
+
+        $r = db_connect()->newQuery()->fromSubquery( $view, 'tbl');
+        $r->table = 'tbl';
+        return $r;
+    }
 }

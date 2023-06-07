@@ -1,84 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+class="light-style"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="<?=base_url('assets')?>/"
+  data-template="vertical-menu-template-free"
+  >
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
     <title><?= lang('Errors.pageNotFound') ?></title>
+    <meta name="description" content="" />
 
-    <style>
-        div.logo {
-            height: 200px;
-            width: 155px;
-            display: inline-block;
-            opacity: 0.08;
-            position: absolute;
-            top: 2rem;
-            left: 50%;
-            margin-left: -73px;
-        }
-        body {
-            height: 100%;
-            background: #fafafa;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            color: #777;
-            font-weight: 300;
-        }
-        h1 {
-            font-weight: lighter;
-            letter-spacing: normal;
-            font-size: 3rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            color: #222;
-        }
-        .wrap {
-            max-width: 1024px;
-            margin: 5rem auto;
-            padding: 2rem;
-            background: #fff;
-            text-align: center;
-            border: 1px solid #efefef;
-            border-radius: 0.5rem;
-            position: relative;
-        }
-        pre {
-            white-space: normal;
-            margin-top: 1.5rem;
-        }
-        code {
-            background: #fafafa;
-            border: 1px solid #efefef;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            display: block;
-        }
-        p {
-            margin-top: 1.5rem;
-        }
-        .footer {
-            margin-top: 2rem;
-            border-top: 1px solid #efefef;
-            padding: 1em 2em 0 2em;
-            font-size: 85%;
-            color: #999;
-        }
-        a:active,
-        a:link,
-        a:visited {
-            color: #dd4814;
-        }
-    </style>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="<?=base_url('assets')?>/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="<?=base_url('assets')?>/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="<?=base_url('assets')?>/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="<?=base_url('assets')?>/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="<?=base_url('assets')?>/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="<?=base_url('assets')?>/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="<?=base_url('assets')?>/vendor/css/pages/page-misc.css" />
+    <!-- Helpers -->
+    <script src="<?=base_url('assets')?>/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="<?=base_url('assets')?>/js/config.js"></script>
+
 </head>
-<body>
-    <div class="wrap">
-        <h1>404</h1>
-
-        <p>
+<body>  
+        <!-- Error -->
+    <div class="container-xxl container-p-y">
+      <div class="misc-wrapper">
+        <h2 class="mb-2 mx-2">Page Not Found :(</h2>
+        <p class="mb-4 mx-2">Oops! 😖 The requested URL was not found on this server.</p>
+        <pclass="mb-4 mx-2">
             <?php if (ENVIRONMENT !== 'production') : ?>
                 <?= nl2br(esc($message)) ?>
             <?php else : ?>
                 <?= lang('Errors.sorryCannotFind') ?>
             <?php endif ?>
         </p>
+        <a href="<?=site_url('dashboard')?>" class="btn btn-primary">Back to home</a>
+        <div class="mt-3">
+          <img
+            src="<?=base_url('assets')?>/img/illustrations/page-misc-error-light.png"
+            alt="page-misc-error-light"
+            width="500"
+            class="img-fluid"
+            data-app-dark-img="illustrations/page-misc-error-dark.png"
+            data-app-light-img="illustrations/page-misc-error-light.png"
+          />
+        </div>
+      </div>
     </div>
+        
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="<?=base_url('assets')?>/vendor/libs/jquery/jquery.js"></script>
+    <script src="<?=base_url('assets')?>/vendor/libs/popper/popper.js"></script>
+    <script src="<?=base_url('assets')?>/vendor/js/bootstrap.js"></script>
+    <script src="<?=base_url('assets')?>/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="<?=base_url('assets')?>/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="<?=base_url('assets')?>/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

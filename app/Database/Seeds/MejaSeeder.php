@@ -10,11 +10,9 @@ class MejaSeeder extends Seeder
     public function run()
     {
         $id = (new MejaModel())->insert([
-            'nama_meja'         =>'makanan Kuah',
-            'no_meja'           =>'01',
+            'meja'         =>'Meja Krusi',
             'kapasitas'         =>'4',
-            'status'            =>'T',
-            'ruangan_id'        =>1,
+            'status'            =>1,
         ]);
         echo "hasil id = $id";
     }

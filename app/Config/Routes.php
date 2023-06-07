@@ -33,12 +33,21 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+$routes->group('register', function(RouteCollection $routes){
+    $routes->get('/', 'UserController::viewRegister');
+    $routes->post('/', 'UserController::register');
+});
+
 $routes->group('login', function(RouteCollection $routes){
     $routes->get('lupa', 'UserController::viewLupaPassword');
     $routes->get('/', 'UserController::viewLogin');
     $routes->post('/', 'UserController::login');
     $routes->delete('/', 'UserController::logout');
     $routes->patch('/', 'UserController::lupaPassword');
+});
+
+$routes->group('dashboard', function(RouteCollection $routes){
+    $routes->get('/', 'DashboardController::index');
 });
 
 $routes->group('user', function(RouteCollection $routes){
@@ -59,32 +68,24 @@ $routes->group('kategori', function(RouteCollection $routes){
     $routes->get('all', 'KategoriController::all');
 });
 
-$routes->group('pelanggan', function(RouteCollection $routes){
-    $routes->get('/', 'PelangganController::index');
-    $routes->post('/', 'PelangganController::store');
-    $routes->patch('/', 'PelangganController::update');
-    $routes->delete('/', 'PelangganController::delete');
-    $routes->get('(:num)', 'PelangganController::show/$1');
-    $routes->get('all', 'PelangganController::all');
+
+
+$routes->group('menu', function(RouteCollection $routes){
+    $routes->get('/', 'MenuController::index');
+    $routes->post('/', 'MenuController::store');
+    $routes->patch('/', 'MenuController::update');
+    $routes->delete('/', 'MenuController::delete');
+    $routes->get('(:num)', 'MenuController::show/$1');
+    $routes->get('(:num)/menu.jpg', 'MenuController::foto/$1');
+    $routes->get('all', 'MenuController::all');
 });
 
-$routes->group('produk', function(RouteCollection $routes){
-    $routes->get('/', 'ProdukController::index');
-    $routes->post('/', 'ProdukController::store');
-    $routes->patch('/', 'ProdukController::update');
-    $routes->delete('/', 'ProdukController::delete');
-    $routes->get('(:num)', 'ProdukController::show/$1');
-    $routes->get('all', 'ProdukController::all');
+$routes->group('petugas/menu', function(RouteCollection $routes){
+    $routes->get('/', 'MenuPetugasController::index');
 });
 
-
-$routes->group('ruangan', function(RouteCollection $routes){
-    $routes->get('/', 'RuanganController::index');
-    $routes->post('/', 'RuanganController::store');
-    $routes->patch('/', 'RuanganController::update');
-    $routes->delete('/', 'RuanganController::delete');
-    $routes->get('(:num)', 'RuanganController::show/$1');
-    $routes->get('all', 'RuanganController::all');
+$routes->group('customer/menu', function(RouteCollection $routes){
+    $routes->get('/', 'MenuCustomerController::index');
 });
 
 $routes->group('meja', function(RouteCollection $routes){
@@ -96,6 +97,14 @@ $routes->group('meja', function(RouteCollection $routes){
     $routes->get('all', 'MejaController::all');
 });
 
+$routes->group('petugas/meja', function(RouteCollection $routes){
+    $routes->get('/', 'MejaPetugasController::index');
+});
+
+$routes->group('customer/meja', function(RouteCollection $routes){
+    $routes->get('/', 'MejaCustomerController::index');
+});
+
 $routes->group('pesanan', function(RouteCollection $routes){
     $routes->get('/', 'PesananController::index');
     $routes->post('/', 'PesananController::store');
@@ -105,14 +114,15 @@ $routes->group('pesanan', function(RouteCollection $routes){
     $routes->get('all', 'PesananController::all');
 });
 
-$routes->group('detail', function(RouteCollection $routes){
-    $routes->get('/', 'DetailPesananController::index');
-    $routes->post('/', 'DetailPesananController::store');
-    $routes->patch('/', 'DetailPesananController::update');
-    $routes->delete('/', 'DetailPesananController::delete');
-    $routes->get('(:num)', 'DetailPesananController::show/$1');
-    $routes->get('all', 'DetailPesananController::all');
+$routes->group('petugas/pesanan', function(RouteCollection $routes){
+    $routes->get('/', 'PesananPetugasController::index');
 });
+
+$routes->group('customer/pesanan', function(RouteCollection $routes){
+    $routes->get('/', 'PesananCustomerController::index');
+});
+
+
 
 $routes->group('reservasi', function(RouteCollection $routes){
     $routes->get('/', 'ReservasiController::index');
@@ -121,6 +131,14 @@ $routes->group('reservasi', function(RouteCollection $routes){
     $routes->delete('/', 'ReservasiController::delete');
     $routes->get('(:num)', 'ReservasiController::show/$1');
     $routes->get('all', 'ReservasiController::all');
+});
+
+$routes->group('petugas/reservasi', function(RouteCollection $routes){
+    $routes->get('/', 'ReservasiPetugasController::index');
+});
+
+$routes->group('customer/reservasi', function(RouteCollection $routes){
+    $routes->get('/', 'ReservasiCustomerController::index');
 });
 /*
  * --------------------------------------------------------------------

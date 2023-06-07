@@ -10,16 +10,18 @@ class Reservasi extends Migration
     {
         $this->forge->addField([
             'id'            => [ 'type'=>'int', 'constraint'=>10, 'unsigned'=>true, 'auto_increment'=>true ],
-            'no_reservasi'  => ['type'=>'varchar', 'constraint'=>255, 'null'=>false ],
-            'pelanggan_id'  => [ 'type'=> 'int', 'constraint'=>10, 'unsigned'=>true ],
-            'tgl_booking'   => [ 'type'=>'date', 'null'=>true ],
+            'user_id'        => [ 'type'=> 'int', 'constraint'=>10, 'unsigned'=>true ],            'tgl_booking'   => [ 'type'=>'date', 'null'=>true ],
             'waktu_booking' => [ 'type'=>'time', 'null'=>true],
+            'meja_id'       => [ 'type'=> 'int', 'constraint'=>10, 'unsigned'=>true ],
+            'status'        => [ 'type' => 'int', 'constraint'=>2, 'null'=>true ],
             'created_at'    => [ 'type' => 'datetime', 'null'=>true ],
             'updated_at'    => [ 'type' => 'datetime', 'null'=>true ],
             'deleted_at'    => [ 'type' => 'datetime', 'null'=>true ]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('pelanggan_id', 'pelanggan', 'id', 'cascade');
+        $this->forge->addForeignKey('user_id', 'user', 'id', 'cascade');
+        $this->forge->addForeignKey('meja_id', 'meja', 'id', 'cascade');
+
         $this->forge->createTable('reservasi');
     }
 

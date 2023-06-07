@@ -10,10 +10,11 @@ class ReservasiSeeder extends Seeder
     public function run()
     {
         $id = (new ReservasiModel())->insert([
-            'no_reservasi'         => '001',
-            'pelanggan_id'         =>1,
+            'user_id'              =>1,
             'tgl_booking'          =>'2023-04-25',
-            'waktu_booking'        =>'16:00',
+            'waktu_booking'        =>'12:00 AM',
+            'status'            =>1,
+
         ]);
         echo "hasil id = $id";
     }

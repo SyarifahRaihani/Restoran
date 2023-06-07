@@ -11,10 +11,10 @@ class UserSeeder extends Seeder
     {
         $id = (new UserModel())->insert([
             'nama'      => 'Administrator',
-            'gender'    => 'P',
             'email'     =>'syfraihanihinduan@gmail.com',
             'sandi'     => password_hash('123456', PASSWORD_BCRYPT),
-            'level'     => 'A',
+            'nohp'      => '085849999627',
+            'level'     => 'admin',
         ]);
         echo "hasil id = $id";
     }

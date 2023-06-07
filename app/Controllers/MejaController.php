@@ -4,23 +4,27 @@ namespace App\Controllers;
 
 use Agoenxz21\Datatables\Datatable;
 use App\Controllers\BaseController;
+use App\Database\Migrations\Meja;
 use App\Models\MejaModel;
+use App\Models\RuanganModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class MejaController extends BaseController
 {
     public function index()
     {
-        return view('Meja/table');
+        return view('Admin/Meja/table');
     }
 
     public function all()
     {
+        
+
         $pm =new MejaModel();
-        $pm->select('id, nama_meja, no_meja, kapasitas, status, ruangan_id');
+        $pm->select('id, meja, kapasitas, status');
 
         return (new Datatable( $pm ))
-                ->setFieldFilter(['nama_meja'])
+                ->setFieldFilter(['meja'])
                 ->draw();
     }
 
@@ -37,11 +41,10 @@ class MejaController extends BaseController
         $pm = new MejaModel();
 
         $id = $pm->insert([
-            'nama_meja'         => $this->request->getVar('nama_meja'),
-            'no_meja'           => $this->request->getVar('no_meja'),
+            'meja'         => $this->request->getVar('meja'),
             'kapasitas'         => $this->request->getVar('kapasitas'),
             'status'            => $this->request->getVar('status'),
-            'ruangan_id'        => $this->request->getVar('ruangan_id'),
+            
         ]);
         return $this->response->setJSON(['id' => $id])
                               ->setStatusCode( intval($id) > 0 ? 200 : 406 );
@@ -56,11 +59,9 @@ class MejaController extends BaseController
             throw PageNotFoundException::forPageNotFound();
 
         $hasil = $pm->update($id, [
-            'nama_meja'     => $this->request->getVar('nama_meja'),
-            'no_meja'       => $this->request->getVar('no_meja'),
-            'kapasitas'     => $this->request->getVar('kapasitas'),
-            'status'        => $this->request->getVar('status'),
-            'ruangan_id'    => $this->request->getVar('ruangan_id'),
+            'meja'         => $this->request->getVar('meja'),
+            'kapasitas'         => $this->request->getVar('kapasitas'),
+            'status'            => $this->request->getVar('status'),
         ]);
         return $this->response->setJSON(['result'=>$hasil]);
     }

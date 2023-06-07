@@ -39,4 +39,16 @@ class PesananModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    static public function view(){
+        $view = (new PesananModel())
+                    ->select("pesanan.*, user.nama as user, menu.nama as menu,")
+                    ->join('user', 'pesanan.user_id = user.id', 'left')
+                    ->join('menu', 'pesanan.menu_id = menu.id', 'left')
+                    ->builder();
+
+        $r = db_connect()->newQuery()->fromSubquery( $view, 'tbl');
+        $r->table = 'tbl';
+        return $r;
+    }
 }

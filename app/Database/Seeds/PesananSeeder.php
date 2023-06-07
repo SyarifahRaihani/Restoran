@@ -10,9 +10,13 @@ class PesananSeeder extends Seeder
     public function run()
     {
         $id = (new PesananModel())->insert([
-            'no_pesan'              => '001',
-            'pelanggan_id'          =>1,
-            'alamat'                =>'tanjung raya 2',
+            'user_id'               =>1,
+            'tgl_pesan'                =>'2023-04-25',
+            'menu_id'                  =>1,
+            'total'                     =>'',
+            'bayar'                     =>'',
+            'kembali'                   =>'',
+            'status'            =>1,
         ]);
         echo "hasil id = $id";
     }

@@ -11,10 +11,11 @@ class User extends Migration
         $this->forge->addField([
             'id'    => [ 'type'=>'int', 'constraint'=>10, 'unsigned'=>true, 'auto_increment'=>true ],
             'nama'  => [ 'type'=> 'varchar', 'constraint'=>255, 'null'=>false ],
-            'gender'        => [ 'type' => 'enum("L", "P")', 'null'=>true ],
             'email'  => [ 'type'=>'varchar', 'constraint'=>255, 'null'=>true ],
             'sandi' => [ 'type'=>'varchar', 'constraint'=>60, 'null'=>true ],
-            'level' => [ 'type'=>'enum("P", "C", "A")', 'null'=>true ],
+            'nohp'      => [ 'type' => 'varchar', 'constraint'=> 15 ],
+            'foto'              => [ 'type' => 'varchar', 'constraint' => 255],
+            'level' => [ 'type'=>'enum("admin", "petugas", "customer")', 'null'=>true ],
             'created_at'    => [ 'type' => 'datetime', 'null'=>true ],
             'updated_at'    => [ 'type' => 'datetime', 'null'=>true ],
             'deleted_at'    => [ 'type' => 'datetime', 'null'=>true ]

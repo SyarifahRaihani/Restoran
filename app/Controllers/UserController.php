@@ -23,7 +23,9 @@ class UserController extends BaseController
                         ->setStatusCode(404);
         }
 
-        $cekPassword  = password_verify($password, $user['sandi']);
+        $cekPassword  = password_verify($password, $user['sandi']);{
+            
+        }
         if($cekPassword == false){
             return $this->response->setJSON(['message'=>'Email dan sandi tidak cocok'])
                         ->setStatusCode(403);
@@ -31,12 +33,17 @@ class UserController extends BaseController
 
         $this->session->set('user', $user);
         return $this->response->setJSON(['message'=>"Selamat datang {$user['nama']} "])
-                    ->setStatusCode(200);
-    }
+                    ->setStatusCode(200);       
+}
 
     public function viewLogin()
     {
         return view('login');
+    }
+
+    public function viewRegister()
+    {
+        return view('register');
     }
 
     public function lupaPassword(){
@@ -87,13 +94,13 @@ class UserController extends BaseController
 
         public function index()
         {
-            return view('User/table');
+            return view('Admin/User/table');
         }
 
         public function all()
         {
             $pm =new UserModel();
-            $pm->select('id, nama, gender, email, level');
+            $pm->select('id, nama, email, nohp, level, ');
     
             return (new Datatable( $pm))
                     ->setFieldFilter([])
@@ -115,13 +122,15 @@ class UserController extends BaseController
 
             $id = $pm->insert([
                 'nama'      => $this->request->getVar('nama'),
-                'gender'    => $this->request->getVar('gender'),
                 'email'    => $this->request->getVar('email'),
                 'sandi'    => password_hash($sandi, PASSWORD_BCRYPT),
+                'nohp'    => $this->request->getVar('nohp'),
                 'level'    => $this->request->getVar('level'),
+                
             ]);
             return $this->response->setJSON(['id' => $id])
                         ->setStatusCode( intval($id) > 0 ? 200 : 406 );
+            
         }
 
         public function update()
@@ -134,9 +143,10 @@ class UserController extends BaseController
 
             $hasil  = $pm->update($id, [
                 'nama'      => $this->request->getVar('nama'),
-                'gender'    => $this->request->getVar('gender'),
                 'email'    => $this->request->getVar('email'),
+                'nohp'    => $this->request->getVar('nohp'),
                 'level'    => $this->request->getVar('level'),
+                
             ]);
             return $this->response->setJSON(['result'=>$hasil]);
         }

@@ -11,16 +11,16 @@ class KategoriController extends BaseController
 {
     public function index()
     {
-        return view('Kategori/table');
+        return view('Admin/Kategori/table');
     }
 
     public function all()
     {
         $pm =new KategoriModel();
-        $pm->select('id, nama, deskripsi');
+        $pm->select('id, kategori');
 
         return (new Datatable( $pm ))
-                ->setFieldFilter(['nama'])
+                ->setFieldFilter(['kategori'])
                 ->draw();
     }
 
@@ -37,8 +37,8 @@ class KategoriController extends BaseController
         $pm = new KategoriModel();
 
         $id = $pm->insert([
-            'nama'     => $this->request->getVar('nama'),
-            'deskripsi'         => $this->request->getVar('deskripsi'),
+            'kategori'     => $this->request->getVar('kategori'),
+
         ]);
         return $this->response->setJSON(['id' => $id])
                               ->setStatusCode( intval($id) > 0 ? 200 : 406 );
@@ -53,8 +53,8 @@ class KategoriController extends BaseController
             throw PageNotFoundException::forPageNotFound();
 
         $hasil = $pm->update($id, [
-            'nama'     => $this->request->getVar('nama'),
-            'deskripsi'         => $this->request->getVar('deskripsi'),
+            'kategori'     => $this->request->getVar('kategori'),
+
         ]);
         return $this->response->setJSON(['result'=>$hasil]);
     }

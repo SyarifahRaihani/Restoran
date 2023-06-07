@@ -4,23 +4,26 @@ namespace App\Controllers;
 
 use Agoenxz21\Datatables\Datatable;
 use App\Controllers\BaseController;
+use App\Models\MejaModel;
 use App\Models\ReservasiModel;
+use App\Models\UserModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class ReservasiController extends BaseController
 {
     public function index()
     {
-        return view('Reservasi/table');
+        return view('Admin/Reservasi/table', [
+            'user' => (new UserModel())->findAll(),
+            'meja' => (new MejaModel())->findAll()
+        ]);
     }
 
     public function all()
     {
-        $pm =new ReservasiModel();
-        $pm->select('id, no_reservasi, pelanggan_id, tgl_booking, waktu_booking');
-
-        return (new Datatable( $pm ))
-                ->setFieldFilter(['no_reservasi'])
+        
+        return (new Datatable( ReservasiModel::view() ))
+                ->setFieldFilter(['user_id, tgl_booking'])
                 ->draw();
     }
 
@@ -35,12 +38,14 @@ class ReservasiController extends BaseController
     public function store()
     {
         $pm = new ReservasiModel();
-
+      
+        $user = session('user');
         $id = $pm->insert([
-            'no_reservasi'     => $this->request->getVar('no_reservasi'),
-            'pelanggan_id, '   => $this->request->getVar('pelanggan_id, '),
-            'tgl_booking, '    => $this->request->getVar('tgl_booking, '),
-            'waktu_booking, '  => $this->request->getVar('waktu_booking, '),
+            'user_id'         => $user['id'],
+            'tgl_booking '    => $this->request->getVar('tgl_booking'),
+            'waktu_booking '  => $this->request->getVar('waktu_booking'),
+            'meja_id'         => $this->request->getVar('meja_id'),
+            'status'          => $this->request->getVar('status'),
         ]);
         return $this->response->setJSON(['id' => $id])
                               ->setStatusCode( intval($id) > 0 ? 200 : 406 );
@@ -54,11 +59,13 @@ class ReservasiController extends BaseController
         if( $pm->find($id) == null )
             throw PageNotFoundException::forPageNotFound();
 
+        $user = session('user');
         $hasil = $pm->update($id, [
-            'no_reservasi'     => $this->request->getVar('no_reservasi'),
-            'pelanggan_id, '         => $this->request->getVar('pelanggan_id, '),
-            'tgl_booking, '         => $this->request->getVar('tgl_booking, '),
-            'waktu_booking, '         => $this->request->getVar('waktu_booking, '),
+            'user_id'         => $user['id'],
+            'tgl_booking '    => $this->request->getVar('tgl_booking '),
+            'waktu_booking '  => $this->request->getVar('waktu_booking '),
+            'meja_id'         => $this->request->getVar('meja_id'),
+            'status'         => $this->request->getVar('status'),
         ]);
         return $this->response->setJSON(['result'=>$hasil]);
     }

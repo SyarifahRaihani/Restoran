@@ -4,23 +4,26 @@ namespace App\Controllers;
 
 use Agoenxz21\Datatables\Datatable;
 use App\Controllers\BaseController;
+use App\Models\MenuModel;
 use App\Models\PesananModel;
+use App\Models\UserModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class PesananController extends BaseController
 {
     public function index()
     {
-        return view('Pesanan/table');
+        return view('Admin/Pesanan/table', [
+            'user' => (new UserModel())->findAll(),
+            'menu' => (new MenuModel())->findAll()            
+        ]);
     }
 
     public function all()
     {
-        $pm = new PesananModel();
-        $pm->select('id, no_pesan, pelanggan_id, alamat');
 
-        return (new Datatable($pm))
-            ->setFieldFilter(['no_pesan'])
+        return (new Datatable(PesananModel::view()))
+            ->setFieldFilter(['user, tgl_pesan'])
             ->draw();
     }
 
@@ -36,10 +39,16 @@ class PesananController extends BaseController
     {
         $pm = new PesananModel();
 
+        $user = session('user');
+        $tanggal=date('Y-m-d');
         $id = $pm->insert([
-            'no_pesan'     => $this->request->getVar('no_pesan'),
-            'pelanggan_id'         => $this->request->getVar('pelanggan_id'),
-            'alamat'         => $this->request->getVar('alamat'),
+            'user_id'         => $user['id'],
+            'tgl_pesan'       => $this->request->getVar('tgl_pesan'),
+            'menu_id'         => $this->request->getVar('menu_id'),
+            'tgl_pesan'       => $tanggal,
+            'total'           => $this->request->getVar('total'),
+            'alamat'          => $this->request->getVar('alamat'),
+            'status'          => $this->request->getVar('status'),
         ]);
         return $this->response->setJSON(['id' => $id])
             ->setStatusCode(intval($id) > 0 ? 200 : 406);
@@ -53,10 +62,15 @@ class PesananController extends BaseController
         if ($pm->find($id) == null)
             throw PageNotFoundException::forPageNotFound();
 
+        $user = session('user');
+        $tanggal=date('Y-m-d');
         $hasil = $pm->update($id, [
-            'no_pesan'     => $this->request->getVar('no_pesan'),
-            'pelanggan_id'         => $this->request->getVar('pelanggan_id'),
-            'alamat'         => $this->request->getVar('alamat'),
+            'user_id'           => $user['id'],
+            'tgl_pesan'         => $tanggal,
+            'menu_id'           => $this->request->getVar('menu_id'),
+            'total'             => $this->request->getVar('total'),
+            'alamat'            => $this->request->getVar('alamat'),
+            'status'          => $this->request->getVar('status'),
         ]);
         return $this->response->setJSON(['result' => $hasil]);
     }
